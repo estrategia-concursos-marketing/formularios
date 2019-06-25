@@ -1,0 +1,226 @@
+<!--- Não usamos tag de HTML, HEAD e BODY pois ele buga o junto com o DIV do Wordpress. Procure evitar por enquanto, se possível. -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous">
+</script>
+
+<div id="forms">
+    <form id="forms_layout" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+
+        <!--- Inputs para Definir Área, Concurso, Evento e do próprio Formulário. NÃO RETIRAR E TOMAR CUIDADO AO ALTERAR! -->
+        <div class="inputs_no_display_forms">
+            <input style="display: none;" name="oid" value="00D41000001Q9k8">
+            <!-- INSERIR AQUI PÁGINA DE SUCESSO SE HOUVER. SE NÃO EXISTIR, PODE RETIRAR ESSA PARTE 
+                <input style="display: none;" id="sucess_page_form" name="retURL" value="#"> 
+            -->
+            <input style="display: none;" id="Cidade_OrigemIP__c" maxlength="200" name="Cidade_OrigemIP__c" size="20" type="text" /><br>
+            <input style="display: none;" id="Estado_OrigemIP__c" maxlength="200" name="Estado_OrigemIP__c" size="20" type="text" /><br>
+            <input style="display: none;" name="Modo_de_entrada__c" id="Modo_de_entrada__c" maxlength="255" size="20" value="Home-Website-Vestibulares">
+            <input style="display: none;" name="lead_source" id="lead_source" maxlength="255" size="20" value="website">
+            <input style="display: none;" name="Area_de_Interesse__c" id="Area_de_Interesse__c" maxlength="30" size="20" value="vestibulares">
+            <input style="display: none;" name="Concurso_de_Interesse__c" id="Concurso_de_Interesse__c" maxlength="255" size="20" value="">
+            <input style="display: none;" name="Interesse_Evento__c" id="Interesse_Evento__c" maxlength="255" size="20" value="">
+            <select style="display: none;"  id="recordType" name="recordType">
+                <option style="display: none;" value="01241000001AP21">Lead Marketing</option>
+            </select>
+        </div>  
+
+        <div>
+            <div class="first_name labels">
+                <p>Nome: </p>
+                <input class="input_labels" id="first_name" maxlength="40" name="first_name" size="20" data-placeholder="NOME" required>
+                <span class="placeholder_input" data-placeholder="NOME"></span>                        
+            </div>
+            <span style="display: none;" id="first_name_message_error" class="message_error">Nome obrigatório.</span>  
+
+            <div class="email labels">
+                <p>Email: </p>
+                <input class="input_labels" id="email" maxlength="80" name="email" type="email" size="20" required>
+                <span class="placeholder_input" data-placeholder="EMAIL"></span>                        
+            </div>
+            <span  style="display: none;" id="email_message_error" class="message_error">Email inválido.</span>  
+
+            <div class="phone labels">
+                <p>Telefone: </p>
+                <input class="input_labels" id="phone" maxlength="15" name="phone" size="20">
+                <span class="placeholder_input" data-placeholder="TELEFONE"></span>         
+            </div>
+        </div>
+
+        <div>
+            <button class="button_layout" type="button" onclick="checaValidadeEmail()">
+                <b>Inscreva-se gratuitamente</b>
+            </button>
+        </div>
+        
+        <label class="container_checkbox">
+                Você concorda com a nossa <a class="politics_privacy_ahref" href="https://www.estrategiaconcursos.com.br/gratis/politica-de-privacidade/" target="_blank">Política de Privacidade</a> e aceita receber informações adicionais do Estratégia Educacional.
+                <input id="checkbox_layout" type="checkbox" checked="checked" required>
+                <span class="checkbox"></span>
+        </label>
+
+    </form>
+</div>
+
+<script>
+    /* ===== Capta Cidade e Estado através do IP: NÃO RETIRAR ===== */
+    jQuery.getJSON('https://extreme-ip-lookup.com/json/', function(data) {
+        jQuery("#Cidade_OrigemIP__c").val(data.city);
+        jQuery("#Estado_OrigemIP__c").val(data.region);
+    });
+    
+    /* ===== Definição da Origem da Lead: NÃO RETIRAR ===== */
+    var ModoDeEntrada = document.getElementById("Modo_de_entrada__c");
+    var Referrer = document.referrer;
+    const Source = new URL(decodeURI(window.location.href)).searchParams.get("utm_source");
+    
+    if (Source && Source.length > 0) {
+        const Medium = new URL(decodeURI(window.location.href)).searchParams.get("utm_medium");
+        ModoDeEntrada.setAttribute("value", Source + " / " + Medium);
+    } else {
+        if (Referrer.includes("google")) {
+        ModoDeEntrada.setAttribute("value", "google");
+        }
+        if (Referrer.includes("/blog/")) {
+        ModoDeEntrada.setAttribute("value", "blog");
+        }
+        if (Referrer.includes("facebook")) {
+        ModoDeEntrada.setAttribute("value", "facebook");
+        }
+        if (Referrer.includes("instagram")) {
+        ModoDeEntrada.setAttribute("value", "instagram");
+        }
+        if (Referrer.includes("bing")) {
+        ModoDeEntrada.setAttribute("value", "bing");
+        }
+        if (Referrer.includes("youtube")) {
+        ModoDeEntrada.setAttribute("value", "youtube");
+        }
+        if (Referrer.includes("twitter")) {
+        ModoDeEntrada.setAttribute("value", "twitter");
+        }
+        if (Referrer.includes("linkedin")) {
+        ModoDeEntrada.setAttribute("value", "linkedin");
+        }
+        if (Referrer.includes("pinterest")) {
+        ModoDeEntrada.setAttribute("value", "pinterest");
+        }
+        if (Referrer.includes("tumblr")) {
+        ModoDeEntrada.setAttribute("value", "tumblr");
+        }
+        if (Referrer.includes("salesforce.com")) {
+        ModoDeEntrada.setAttribute("value", "salescloud");
+        }
+        if (Referrer.includes("salesforce.com")) {
+        ModoDeEntrada.setAttribute("value", "salescloud");
+        }
+    }
+
+    /* ===== Título da Página (title) como Interesse Evento ===== */
+    const titleEl = document.getElementsByTagName('title')[0];
+    if (titleEl) {
+        const title = titleEl.innerHTML;
+        if (title.includes(" | Estratégia Concursos")) {
+            var resum = title.substring(0, title.indexOf(" | Estratégia Concursos"));
+            document.getElementById("Interesse_Evento__c").value = resum;
+        } else {
+            document.getElementById("Interesse_Evento__c").value = title;
+        }
+    }
+    
+
+    /* ===== Valida Email na Formatação Correta ===== */
+    function validateEmail(email) {
+        var re = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        return re.test(email);
+    }
+    function beforeSubmit(){
+        var email = $('.message_error input[name="email"]'); 
+        var emailStr = email.val().trim();
+        if(!validateEmail(emailStr)) {
+        showValidate(email);
+        check=false;
+        }
+        return check;
+    } 
+    function showValidate(input) {
+        var thisAlert = input.parent();
+        $(thisAlert).addClass('message_error');
+    }
+
+    /* ===== Descobre se o Email Existe ou Não (API BriteVerify) -> Evita Emails Desconhecidos e Sujos na Base ===== */
+    function checaValidadeEmail(){
+        const name = $('#first_name').val();
+        const email = $('#email').val();
+        const terms = $('#checkbox_layout').get(0).checked;
+        
+        const nameError = $('#first_name_message_error');
+        const emailError = $('#email_message_error');
+        
+        const form = $('#forms_layout');
+
+        if (name === "") {
+            nameError.show();
+            hasError = true;
+        } else {
+            nameError.hide();
+        }
+        
+        if (email === "") {
+            emailError.text("Email Obrigatório.");
+            emailError.show();
+            hasError = true;
+        } else if (!validateEmail(email)) {
+            emailError.text("Formatação Inválida.");
+            emailError.show();
+            hasError = true;
+        } else {
+            emailError.hide();
+        }
+
+        if (name !== "" && email !== "" && validateEmail(email) && terms == true) {
+            $.ajax({
+                type: 'GET',
+                url: 'https://bpi.briteverify.com/emails.json',
+                data: {
+                    address: email,
+                    apikey: "ea609555-7f56-4811-aeb3-a81a322ca1ea"
+                },
+                dataType: 'jsonp',
+                success: function(retornoJson) {
+                    if (retornoJson.status == 'valid') {
+                        emailError.hide();
+                        return form.submit();
+                    } else {
+                        emailError.text("Email Inexistente.");
+                        emailError.show();
+                        return false;
+                    }
+                }
+            });
+        }
+    }
+
+    /* ===== Valida Telefone + Máscara ===== */
+    function mascara(o, f) {
+        v_obj = o;
+        v_fun = f;
+        setTimeout("execmascara()", 1);
+    }
+
+    function execmascara() {
+        v_obj.value = v_fun(v_obj.value);
+    }
+
+    function mtel(v) {
+        v = v.replace(/\D/g,"");
+        v = v.replace(/^(\d{2})(\d)/g,"($1) $2");
+        v = v.replace(/(\d)(\d{4})$/,"$1-$2");
+        return v;
+    }
+    
+    window.onload = function() {
+        document.getElementById('phone').onkeypress = function() {
+            mascara(this, mtel);
+        }
+    }
+</script>
