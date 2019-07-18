@@ -4,10 +4,10 @@
 <style>
     #forms {
         background-color: transparent;
-        font-family: &#039;Gothamblack&#039;,Helvetica,Arial,Lucida,sans-serif;
+        font-family: 'Gothamblack',Arial,Lucida,sans-serif;
     }
 
-    @import url(&#039;https://fonts.googleapis.com/css?family=Roboto&#039;);
+    @import url('https://fonts.googleapis.com/css?family=Roboto');
 
     #forms_layout {
         margin: auto;
@@ -17,7 +17,7 @@
         border-radius: 10px;
         overflow: hidden;
         padding-top: 30px;
-        font-family: &#039;Gothamblack&#039;,Helvetica,Arial,Lucida,sans-serif;
+        font-family: 'Gothamblack',Arial,Lucida,sans-serif;
     }
 
     @media (max-width: 576px) {
@@ -68,7 +68,7 @@
         top: 0;
         left: 0;
         pointer-events: none;
-        font-family: &#039;Gothamblack&#039;,Helvetica,Arial,Lucida,sans-serif;
+        font-family: 'Gothamblack',Arial,Lucida,sans-serif;
     }
 
     .placeholder_input::before {
@@ -92,7 +92,7 @@
         position: absolute;
         top: 0px;
         left: 0;
-        font-family: &#039;Gothamblack&#039;,Helvetica,Arial,Lucida,sans-serif;
+        font-family: 'Gothamblack',Arial,Lucida,sans-serif;
         font-weight: bolder;
         letter-spacing: 0.02em;
         font-size: 1.6em;
@@ -156,7 +156,7 @@
         margin: auto;
         color: #fff; 
         font-size: 0.8em; 
-        font-family: &#039;Gothamblack&#039;,Helvetica,Arial,Lucida,sans-serif;        
+        font-family: 'Gothamblack',Arial,Lucida,sans-serif;        
         text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
         line-height: 1.5; 
         display: block;
@@ -349,7 +349,7 @@
     }
 
     /* ===== Capta Cidade e Estado através do IP ===== */
-    jQuery.getJSON(&#039;https://extreme-ip-lookup.com/json/&#039;, function(data) {
+    jQuery.getJSON('https://extreme-ip-lookup.com/json/', function(data) {
         jQuery("#Cidade_OrigemIP__c").val(data.city);
         jQuery("#Estado_OrigemIP__c").val(data.region);
     });
@@ -402,7 +402,7 @@
     }
 
     /* ===== Título da Página (title) como Interesse Evento ===== */
-    const titleEl = document.getElementsByTagName(&#039;title&#039;)[0];
+    const titleEl = document.getElementsByTagName('title')[0];
     if (titleEl) {
         const title = titleEl.innerHTML;
         if (title.includes(" | Estratégia Concursos")) {
@@ -416,11 +416,11 @@
 
     /* ===== Valida Email na Formatação Correta ===== */
     function validateEmail(email) {
-        var re = /^\w+([-+.&#039;]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        var re = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
         return re.test(email);
     }
     function beforeSubmit(){
-        var email = $(&#039;.message_error input[name="email"]&#039;); 
+        var email = $('.message_error input[name="email"]'); 
         var emailStr = email.val().trim();
         if(!validateEmail(emailStr)) {
         showValidate(email);
@@ -430,19 +430,19 @@
     } 
     function showValidate(input) {
         var thisAlert = input.parent();
-        $(thisAlert).addClass(&#039;message_error&#039;);
+        $(thisAlert).addClass('message_error');
     }
 
     /* ===== Descobre se o Email Existe ou Não (API BriteVerify) -> Evita Emails Desconhecidos e Sujos na Base ===== */
     function checaValidadeEmail(){
-        const name = $(&#039;#first_name&#039;).val();
-        const email = $(&#039;#email&#039;).val();
-        const terms = $(&#039;#checkbox_layout&#039;).get(0).checked;
+        const name = $('#first_name').val();
+        const email = $('#email').val();
+        const terms = $('#checkbox_layout').get(0).checked;
         
-        const nameError = $(&#039;#first_name_message_error&#039;);
-        const emailError = $(&#039;#email_message_error&#039;);
+        const nameError = $('#first_name_message_error');
+        const emailError = $('#email_message_error');
         
-        const form = $(&#039;#forms_layout&#039;);
+        const form = $('#forms_layout');
 
         if (name === "") {
             nameError.show();
@@ -465,15 +465,15 @@
 
         if (name !== "" && email !== "" && validateEmail(email) && terms == true) {
             $.ajax({
-                type: &#039;GET&#039;,
-                url: &#039;https://bpi.briteverify.com/emails.json&#039;,
+                type: 'GET',
+                url: 'https://bpi.briteverify.com/emails.json',
                 data: {
                     address: email,
                     apikey: "ea609555-7f56-4811-aeb3-a81a322ca1ea"
                 },
-                dataType: &#039;jsonp&#039;,
+                dataType: 'jsonp',
                 success: function(retornoJson) {
-                    if (retornoJson.status == &#039;valid&#039;) {
+                    if (retornoJson.status == 'valid') {
                         emailError.hide();
                         return form.submit();
                     } else {
@@ -487,19 +487,19 @@
     }
 
     /* ===== Animação dos Placeholders ===== */
-    $(&#039;.input_labels&#039;).on(&#039;blur&#039;, function() {
+    $('.input_labels').on('blur', function() {
         if($(this).val().trim() != "") {
-            $(this).addClass(&#039;has_val&#039;);
+            $(this).addClass('has_val');
         } else {
-            $(this).removeClass(&#039;has_val&#039;);
+            $(this).removeClass('has_val');
         }
     });
         
-    $(&#039;.labels&#039;).focusout(function() {
+    $('.labels').focusout(function() {
         if($(this).val() === "") {
-            $(this).removeClass(&#039;has_value&#039;);
+            $(this).removeClass('has_value');
         } else { 
-            $(this).addClass(&#039;has_value&#039;);
+            $(this).addClass('has_value');
         }
     });
 
@@ -522,7 +522,7 @@
     }
     
     window.onload = function() {
-        document.getElementById(&#039;phone&#039;).onkeypress = function() {
+        document.getElementById('phone').onkeypress = function() {
             mascara(this, mtel);
         }
     }
