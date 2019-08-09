@@ -1,5 +1,4 @@
 <!--- Não usamos tag de HTML, HEAD e BODY pois ele buga o junto com o DIV do Wordpress. Procure evitar por enquanto, se possível. -->
-
 <style>
     #forms {
         background-color: transparent;
@@ -8,7 +7,7 @@
 
     #forms_layout {
         margin: auto;
-        max-height: 500px;
+        max-height: auto;
         max-width: 430px;
         background: transparent;
         border-radius: 10px;
@@ -146,6 +145,15 @@
         letter-spacing: 0.02em;
         font-size: 1.2em;
         text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
+    }
+
+    label {
+        color: #fff;
+        line-height: 1.6;
+        font-size: 1em;
+        font-weight: bolder;
+        text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
+        font-family: Arial, Helvetica, sans-serif; 
     }
     
     .container_checkbox {
@@ -298,6 +306,86 @@
                 <input class='input_labels' id='phone' maxlength='15' name='phone' size='20'>
                 <span class='placeholder_input' data-placeholder='TELEFONE'></span>         
             </div>
+
+            <div class='labels'>
+                <div style='height: 35px;'></div>
+                <span class='placeholder_input' data-placeholder='VESTIBULAR DE INTERESSE'></span>
+            </div>
+
+            <div class='areas_interest'>
+                <input id='ITA' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='ITA' style='vertical-align:top'/>
+                    <label>
+                        ITA
+                    </label>
+                <br>
+            
+                <input id='IME' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='IME' style='vertical-align:top'/>
+                    <label>
+                      IME
+                    </label>
+                <br>
+            
+                <input id='USP' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='USP' style='vertical-align:top'/>
+                    <label>
+                      USP
+                    </label>
+                <br>
+                
+                <input id='UNESP' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UNESP' style='vertical-align:top'/>
+                    <label>
+                      UNESP
+                    </label>
+                <br>
+            
+                <input id='UNICAMP' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UNICAMP' style='vertical-align:top'/>
+                    <label>
+                      UNICAMP
+                    </label>
+                <br>
+            
+                <input id='FATEC' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='FATEC' style='vertical-align:top'/>
+                    <label>
+                      FATEC
+                    </label>
+                <br>
+            
+                <input id='UEMA' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UEMA' style='vertical-align:top'/>
+                  <label>
+                      UEMA
+                  </label>
+                <br>
+            
+                <input id='UERJ' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UERJ' style='vertical-align:top'/>
+                    <label>
+                      UERJ
+                    </label>
+                <br>
+            
+                <input id='UEA' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UEA' style='vertical-align:top'/>
+                    <label>
+                      UEA
+                    </label>
+                <br>
+            
+                <input id='UFPR' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UFPR' style='vertical-align:top'/>
+                    <label>
+                        UFPR
+                    </label>
+                <br>
+            
+                <input id='UNEB' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UNEB' style='vertical-align:top'/>
+                    <label>
+                        UNEB
+                    </label>
+                <br>
+            
+                <input id='Outras-Instituicoes' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='Outras-Instituicoes' style='vertical-align:top'/>
+                    <label>
+                        Outras Instituições
+                    </label>
+                <br>
+              <br>
+            </div>
         </div>
 
         <div>
@@ -336,6 +424,9 @@
                 break;
             case 'Unyleya':
                 pageType = 'https://www.estrategiaconcursos.com.br/gratis/pagina-sucesso-unyleya/';
+                break;
+            case 'vestibulares':
+                pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso-vestibulares/';
                 break;
             default:
                 pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso/';
@@ -521,6 +612,28 @@
     window.onload = function() {
         document.getElementById('phone').onkeypress = function() {
             mascara(this, mtel);
+        }
+    }
+
+    /* ===== Área de Interesse com Várias Opções ===== */
+    const i = document.getElementById('Concurso_de_Interesse__c');
+    i.setAttribute('value', '-Outras-Instituicoes-');
+
+    function handleAreaClick(ctx) {
+    if (ctx.checked == true) {
+        const newValue = '-' + ctx.id + '-';
+        let value = i.getAttribute('value');
+        value = value.concat(newValue);
+        value = value.replace('-Outras-Instituicoes-', '');
+        i.setAttribute('value', value);
+    } else {
+        const valueToRemove =  '-' + ctx.id + '-';
+        let value = i.getAttribute('value');
+        value = value.replace(valueToRemove, '');
+        if (value === '') {
+            value = '-Outras-Instituicoes-';
+        }
+        i.setAttribute('value', value);
         }
     }
 </script>
