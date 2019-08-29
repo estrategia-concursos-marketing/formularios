@@ -263,11 +263,10 @@
 </style>
 
 <div id='forms'>
-    <form id='forms_layout' action='https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8' method='POST'>
-
+    <form id='forms_layout'>
         <!--- Inputs para Definir Área, Concurso, Evento e do próprio Formulário. NÃO RETIRAR E TOMAR CUIDADO AO ALTERAR! -->
         <div class='inputs_no_display_forms'>
-            <input name='oid' value='00D41000001Q9k8'>
+            <input id='oid' name='oid' value='00D41000001Q9k8'>
             <input id='sucess_page_form' name='retURL' value='https://www.estrategiaconcursos.com.br/gratis/sucesso/'>
             <input id='Cidade_OrigemIP__c' maxlength='200' name='Cidade_OrigemIP__c' size='20' type='text' /><br>
             <input id='Estado_OrigemIP__c' maxlength='200' name='Estado_OrigemIP__c' size='20' type='text' /><br>
@@ -336,6 +335,9 @@
                 break;
             case 'Unyleya':
                 pageType = 'https://www.estrategiaconcursos.com.br/gratis/pagina-sucesso-unyleya/';
+                break;
+            case 'vestibulares':
+                pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso-vestibulares/';
                 break;
             default:
                 pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso/';
@@ -409,7 +411,6 @@
             document.getElementById('Interesse_Evento__c').value = title;
         }
     }
-    
 
     /* ===== Valida Email na Formatação Correta ===== */
     function validateEmail(email) {
@@ -481,7 +482,44 @@
                 }
             });
         }
-    }
+
+        // Enviado os dados pelo Formulário.
+        var formulario = document.getElementById("forms_layout");
+        var data = JSON.stringify({
+					oid: formulario.oid.value,
+					retURL: formulario.sucess_page_form.value,
+					Cidade_OrigemIP__c: formulario.Cidade_OrigemIP__c.value,
+					Estado_OrigemIP__c: formulario.Estado_OrigemIP__c.value,
+					Modo_de_entrada__c: formulario.Modo_de_entrada__c.value,
+					lead_source: formulario.lead_source.value,
+					Area_de_Interesse__c: formulario.Area_de_Interesse__c.value,
+					Concurso_de_Interesse__c: formulario.Concurso_de_Interesse__c.value,
+					Interesse_Evento__c: formulario.Interesse_Evento__c.value,
+					recordType: formulario.recordType.value,
+					Area_de_Interesse__c: formulario.Area_de_Interesse__c.value,
+					first_name: formulario.first_name.value,
+					email: formulario.email.value,
+					phone: formulario.phone.value
+		});
+
+        jQuery.ajax({
+            url: 'https://6kiijqg27h.execute-api.us-east-1.amazonaws.com/dev/add',
+            method: 'post',
+            async: true,
+            crossDomain: true,
+            data: {data},
+            timeout: 2000,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            error: function (error, textStatus, errorThrown) { console.error(error, textStatus, errorThrown); }
+        });
+
+        jQuery("form").submit(function(e){
+            e.preventDefault();
+            window.location.replace(document.getElementById('sucess_page_form').value);
+        });
+    };
 
     /* ===== Animação dos Placeholders ===== */
     jQuery('.input_labels').on('blur', function() {

@@ -263,7 +263,7 @@
 </style>
 
 <div id='forms'>
-    <form id='forms_layout' action='https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8' method='POST'>
+    <form id='forms_layout'>
 
         <!--- Inputs para Definir Área, Concurso, Evento e do próprio Formulário. NÃO RETIRAR E TOMAR CUIDADO AO ALTERAR! -->
         <div class='inputs_no_display_forms'>
@@ -336,6 +336,9 @@
                 break;
             case 'Unyleya':
                 pageType = 'https://www.estrategiaconcursos.com.br/gratis/pagina-sucesso-unyleya/';
+                break;
+            case 'vestibulares':
+                pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso-vestibulares/';
                 break;
             default:
                 pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso/';
@@ -481,6 +484,31 @@
                 }
             });
         }
+        
+		var request = new XMLHttpRequest();
+        function urlencodeFormData(fd){
+            var params = new URLSearchParams();
+            for(var pair of fd.entries()){
+                typeof pair[1]=='string' && params.append(pair[0], pair[1]);
+            }
+            return params.toString();
+        }
+        request.open('POST', 'https://6kiijqg27h.execute-api.us-east-1.amazonaws.com/dev/add', true);
+        request.setRequestHeader('Content-Type','application/x-www-form-urlencoded;charset=UTF-8');
+        var data = urlencodeFormData(new FormData(document.querySelector("form")));
+        request.send(data);
+		window.open("https://www.estrategiaconcursos.com.br/gratis/sucesso/","_self");
+
+        // Enviado os dados pelo Formulário.
+        // var data = new FormData(document.getElementById("forms_layout"));
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('POST', 'https://6kiijqg27h.execute-api.us-east-1.amazonaws.com/dev/add', true);
+        // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        // xhr.onload = function () {
+        //     console.log(this.responseText);
+        // };
+        // xhr.send(data);
+        // window.open("https://www.estrategiaconcursos.com.br/gratis/sucesso/","_self");
     }
 
     /* ===== Animação dos Placeholders ===== */

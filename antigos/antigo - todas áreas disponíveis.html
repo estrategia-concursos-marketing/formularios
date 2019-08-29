@@ -2,29 +2,28 @@
 
 <style>
     #forms {
+        margin: 30px;
         background-color: transparent;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: &#039;Poppins&#039;, sans-serif;
     }
+
+    @import url(&#039;https://fonts.googleapis.com/css?family=Poppins&#039;);
 
     #forms_layout {
         margin: auto;
-        max-height: 500px;
-        max-width: 430px;
-        background: transparent;
+        max-height: 1000px;
+        max-width: 300px;
+        background: #e5e5e5;
         border-radius: 10px;
         overflow: hidden;
-        padding-top: 30px;
-        font-family: Arial, Helvetica, sans-serif;
+        padding: 30px 30px 20px 30px;
+        box-shadow: 1px 1px 20px 3px rgba(0, 0, 0, 0.2);
+        font-family: &#039;Poppins&#039;, sans-serif;
     }
 
     @media (max-width: 576px) {
-        #forms_layout {
-            padding: 20px;
-            max-width: 280px;
-            }
-
-        .container_checkbox {
-            min-width: 100%;
+    #forms_layout {
+        padding: 20px;
         }
     }
 
@@ -35,9 +34,8 @@
     .labels{
         width: 100%;
         position: relative;
-        border-bottom: 2px solid #fff;
-        box-shadow: 0 0.2em 0.1em -0.1em rgba(0,0,0,0.4);
-        margin-bottom: 30px;
+        border-bottom: 2px solid #595959;
+        margin-bottom: 20px;
     }
 
     .input_labels {
@@ -45,31 +43,26 @@
         text-transform: capitalize;
         display: block;
         width: 100%;
-        font-size: 1.6em;
-        font-weight: bolder;
-        letter-spacing: 0.02em;
-        text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
-        color: #fff;
+        font-size: 13px;
+        color: #595959;
         line-height: 1.2;
         background-color: transparent !important;
     }
 
     /* -----> Animação dos Placeholders no Input <----- */
     .placeholder_input {
-        text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
         position: absolute;
         display: block;
         width: 100%;
         height: 100%;
-        color: #fff;
         top: 0;
         left: 0;
         pointer-events: none;
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: &#039;Poppins&#039;, sans-serif;
     }
 
     .placeholder_input::before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         bottom: -2px;
@@ -89,10 +82,11 @@
         position: absolute;
         top: 0px;
         left: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: bolder;
-        letter-spacing: 0.02em;
-        font-size: 1.6em;
+        color: #0D3968;
+        font-family: &#039;Poppins&#039;, sans-serif;
+        font-weight: regular;
+        font-size: 13px;
+        color: #595959;
         line-height: 1.2;
         -webkit-transition: all 0.4s;
         -o-transition: all 0.4s;
@@ -102,38 +96,47 @@
 
     input.input_labels {
         height: 45px;
+        color: #595959;
         border: 0px;
     }
 
     input.input_labels + .placeholder_input::after {
-        top: 10px;
+        top: 16px;
         left: 0;
+        color: #595959;
     }
 
     textarea.input_labels {
         min-height: 115px;
         padding-top: 13px;
         padding-bottom: 13px;
+        color: #595959;
+    }
+
+    textarea.input_labels + .placeholder_input::after {
+        top: 16px;
+        left: 0;
+        color: #595959;
     }
 
     .input_labels:focus + .placeholder_input::after {
-        color: transparent;
-        text-shadow: none;
+        top: -13px;
+        color: #595959;
     }
 
     .input_labels:focus + .placeholder_input::before {
         width: 100%;
-        color: #fff;
+        color: #595959;
     }
 
     .has_val.input_labels + .placeholder_input::after {
-        color: transparent;
-        text-shadow: none;
+        top: -13px;
+        color: #cacaca;
     }
 
     .has_val.input_labels + .placeholder_input::before {
         width: 100%;
-        color: transparent;
+        color: #cacaca;
     }
     /* -----> FIM da Animação <----- */
 
@@ -142,23 +145,18 @@
         position: relative; 
         top: -18px; 
         color: red; 
-        font-weight: bolder;
-        letter-spacing: 0.02em;
-        font-size: 1.2em;
-        text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
+        font-weight: bold;
     }
     
     .container_checkbox {
-        width: 60%;
-        margin: auto;
-        color: #fff; 
-        font-size: 0.8em; 
-        font-family: Arial, Helvetica, sans-serif;        
-        text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
+        color: #595959; 
+        font-size: 0.7em; 
         line-height: 1.5; 
+        font-family: &#039;Poppins&#039;, sans-serif;
         display: block;
         position: relative;
-        padding: 20px 0px 7px 35px;
+        padding-left: 35px;
+        padding-bottom: 7px;
         cursor: pointer;
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -176,7 +174,6 @@
 
     .checkbox {
         position: absolute;
-        margin: 25px 0px 0px 5px;
         top: 0;
         left: 0;
         height: 20px;
@@ -192,11 +189,11 @@
     }
 
     .container_checkbox input:checked ~ .checkbox {
-        background-color: #1d61c4;
+        background-color: #144b9b;
     }
 
     .checkbox:after {
-        content: '';
+        content: "";
         position: flex;
         margin: auto;
         display: none;
@@ -232,16 +229,14 @@
         display: flex;
         flex-wrap: wrap;
         position: relative;
-        margin: 0 auto;
-        width: 70%;
+        width: 100%;
         height: 50px;
-        background-color: #2376dc;
-        color: #fff;
+        background-color: #144b9b;
+        color: white;
         justify-content: center;
         align-items: center;
         padding: 0 10px;
-        font-weight: bolder;
-        letter-spacing: 0.02em;
+        font-weight: medium;
         font-size: 18px;
         line-height: 1.2;                
         border-radius: 5px;
@@ -251,14 +246,29 @@
     }
 
     .button_layout:hover {
-        background-color: #144b9b;
+        background-color: #0D3268;
     }
 
     .politics_privacy_ahref {
         text-decoration: none; 
-        color: #FFF;
-        font-weight: bolder;
-        text-decoration: underline;
+        color: #2316E8;
+    }
+
+    .areas_interest {
+        color: #595959; 
+        line-height: 1.5; 
+        background: #e5e5e5; 
+        font-size: 0.9em;
+        font-family: &#039;Poppins&#039;, sans-serif;
+    }
+
+    .disclaimer_data {
+        padding-left: 5px;
+        color: #595959; 
+        font-size: 0.7em; 
+        line-height: 1.5; 
+        font-family: &#039;Poppins&#039;, sans-serif; 
+        padding: 10px 0px 0px 0px;
     }
 </style>
 
@@ -272,44 +282,179 @@
             <input id='Estado_OrigemIP__c' maxlength='200' name='Estado_OrigemIP__c' size='20' type='text' /><br>
             <input name='Modo_de_entrada__c' id='Modo_de_entrada__c' maxlength='255' size='20' value='landing-page'>
             <input name='lead_source' id='lead_source' maxlength='255' size='20' value='Landing Page'>
-            <input name='Area_de_Interesse__c' id='Area_de_Interesse__c' maxlength='30' size='20' value='geral'>
+            <input name='Area_de_Interesse__c' id='Area_de_Interesse__c' maxlength='30' size='20' value='tecnologia-da-informacao'>
             <input name='Concurso_de_Interesse__c' id='Concurso_de_Interesse__c' maxlength='255' size='20' value=''>
             <input name='Interesse_Evento__c' id='Interesse_Evento__c' maxlength='255' size='20' value=''>
             <select  id='recordType' name='recordType'>
                 <option value='01241000001AP21'>Lead Marketing</option>
             </select>
-        </div>  
-
+        </div> 
+        
         <div>
-            <div class='first_name labels'>
-                <input class='input_labels' id='first_name' maxlength='40' name='first_name' size='20' required>
-                <span class='placeholder_input' data-placeholder='NOME'></span>                        
+            <div class="first_name labels">
+                <input class="input_labels" id="first_name" maxlength="40" name="first_name" size="20" required>
+                <span class="placeholder_input" data-placeholder="NOME"></span>                        
             </div>
-            <span id='first_name_message_error' class='message_error'>Nome obrigatório.</span>  
+            <span id="first_name_message_error" class="message_error">Nome obrigatório.</span>  
 
-            <div class='email labels'>
-                <input class='input_labels' id='email' maxlength='80' name='email' type='email' size='20' required style='text-transform: lowercase; color: #fff !important;'>
-                <span class='placeholder_input' data-placeholder='EMAIL'></span>                        
+            <div class="email labels">
+                <input class="input_labels" id="email" maxlength="80" name="email" type="email" size="20" required style="text-transform: lowercase;">
+                <span class="placeholder_input" data-placeholder="EMAIL"></span>                        
             </div>
-            <span id='email_message_error' class='message_error'>Email inválido.</span>  
+            <span id="email_message_error" class="message_error">Email inválido.</span>  
 
-            <div class='phone labels'>
-                <input class='input_labels' id='phone' maxlength='15' name='phone' size='20'>
-                <span class='placeholder_input' data-placeholder='TELEFONE'></span>         
+            <div class="phone labels">
+                <input class="input_labels" id="phone" maxlength="15" name="phone" size="20">
+                <span class="placeholder_input" data-placeholder="TELEFONE"></span>    
             </div>
+
+            <div class="labels">
+                <div style="height: 35px;"></div>
+                <span class="placeholder_input" data-placeholder="ÁREA DE INTERESSE"></span>
+            </div>
+
+            <div class="areas_interest">
+                    <input id="Administrativo" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Administrativo" style="vertical-align:top"/>
+                    <label>
+                        Administrativo
+                    </label>
+                <br>
+            
+                <input id="Agencias-Reguladoras" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Agencias-Reguladoras" style="vertical-align:top"/>
+                    <label>
+                      Agências Reguladoras
+                    </label>
+                <br>
+            
+                <input id="Bancaria" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Bancaria" style="vertical-align:top"/>
+                    <label>
+                      Bancária
+                    </label>
+                <br>
+                
+                <input id="tribunais-de-contas" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="tribunais-de-contas-controle" style="vertical-align:top"/>
+                    <label>
+                        Controladoria e Gestão
+                    </label>
+                <br>
+            
+                <input id="Diplomacia-Comercio-Exterior" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Diplomacia-Comercio-Exterior" style="vertical-align:top"/>
+                    <label>
+                      Diplomacia e Comércio Exterior
+                    </label>
+                <br>
+            
+                <input id="Educacao" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Educacao" style="vertical-align:top"/>
+                    <label>
+                      Educação
+                    </label>
+                <br>
+            
+              <input id="fiscal" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="fiscal" style="vertical-align:top"/>
+                  <label>
+                      Fiscal
+                  </label>
+              <br>
+            
+              <input id="Financeira" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Financeira" style="vertical-align:top"/>
+                <label>
+                    Financeira
+                </label>
+              <br>
+            
+              <input id="Infraestrutura-Engenharia-Civil" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Infraestrutura-Engenharia-Civil" style="vertical-align:top"/>
+                  <label>
+                    Infraestrutura e Engenharia Civil
+                  </label>
+              <br>
+            
+              <input id="legislativa" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="legislativa" style="vertical-align:top"/>
+                <label>
+                    Legislativa
+                </label>
+              <br>
+            
+              <input id="Policial" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Policial" style="vertical-align:top"/>
+                <label>
+                    Policial
+                </label>
+              <br>
+            
+              <input id="saude" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="saude" style="vertical-align:top"/>
+                <label>
+                    Saúde
+                </label>
+              <br>
+            
+              <input id="tecnologia-da-informacao" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="tecnologia-da-informacao" style="vertical-align:top"/>
+                <label>
+                    Tecnologia da Informação
+                </label>
+              <br>
+            
+              <input id="tribunais" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="tribunais" style="vertical-align:top"/>
+                <label>
+                    Tribunais
+                </label>
+              <br>
+            
+              <input id="Juridica" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Juridica" style="vertical-align:top"/>
+                <label>
+                    Jurídica
+                </label>
+              <br>
+            
+              <input id="OAB" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="OAB" style="vertical-align:top"/>
+                <label>
+                    OAB
+                </label>
+              <br>
+            
+              <input id="contabilidade" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="contabilidade" style="vertical-align:top"/>
+                <label>
+                    Contabilidade
+                </label>
+              <br>
+            
+              <input id="Coaching" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Coaching" style="vertical-align:top"/>
+                <label>
+                  Coaching
+                </label>
+              <br>
+            
+              <input id="Militar" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="Militar" style="vertical-align:top"/>
+                <label>
+                    Militar
+                </label>
+              <br>
+            
+              <input id="ENEM" name="area-de-interesse" onclick="handleAreaClick(this)" type="checkbox" value="ENEM" style="vertical-align:top"/>
+                  <label>
+                      ENEM
+                  </label>
+              <br>
+            
+            <br>
+            </div>
+
+
         </div>
 
+        <label class="container_checkbox">
+                Você concorda com a nossa <a class="politics_privacy_ahref" href="https://www.estrategiaconcursos.com.br/gratis/politica-de-privacidade/" target="_blank">Política de Privacidade</a> e aceita receber informações adicionais do Estratégia Educacional.
+                <input id="checkbox_layout" type="checkbox" checked="checked" required>
+                <span class="checkbox"></span>
+        </label>
+
         <div>
-            <button class='button_layout' type='button' onclick='checaValidadeEmail()'>
+            <button class="button_layout" type="button" onclick="checaValidadeEmail()">
                 <b>Inscreva-se gratuitamente</b>
             </button>
         </div>
-        
-        <label class='container_checkbox'>
-                Você concorda com a nossa <a class='politics_privacy_ahref' href='https://www.estrategiaconcursos.com.br/gratis/politica-de-privacidade/' target='_blank' rel='noopener noreferrer'>Política de Privacidade</a> e aceita receber informações adicionais do Estratégia Educacional.
-                <input id='checkbox_layout' type='checkbox' checked='checked' required>
-                <span class='checkbox'></span>
-        </label>
+
+        <div class="disclaimer_data">
+            <p>Os seus dados não serão vendidos ou compartilhados com terceiros.</p>
+        </div>
 
     </form>
 </div>

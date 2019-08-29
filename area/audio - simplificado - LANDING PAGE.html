@@ -1,7 +1,7 @@
 <!--- Não usamos tag de HTML, HEAD e BODY pois ele buga o junto com o DIV do Wordpress. Procure evitar por enquanto, se possível. -->
 
 <div id='forms'>
-    <form id='forms_layout' action='https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8' method='POST'>
+    <form id='forms_layout'>
 
         <!--- Inputs para Definir Área, Concurso, Evento e do próprio Formulário. NÃO RETIRAR E TOMAR CUIDADO AO ALTERAR! -->
         <div class='inputs_no_display_forms'>
@@ -59,7 +59,39 @@
 </div>
 
 <script>
-    /* ===== Capta Cidade e Estado através do IP: NÃO RETIRAR ===== */
+    /* ===== Página de Sucesso Referente à Área ===== */
+    let successEl = document.getElementById('sucesso');
+    if (successEl) {
+        let pageType = successEl.innerHTML;
+        const sucesso_normal = 'https://www.estrategiaconcursos.com.br/gratis/sucesso/';
+        const area = document.getElementById('Area_de_Interesse__c').value;
+
+        if (pageType == sucesso_normal) {
+            switch (area) {
+            case 'ENEM':
+                pageType = 'https://www.estrategiaconcursos.com.br/gratis/pagina-sucesso-enem/';
+                break;
+            case 'judiciario':
+                pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso-carreira-juridica/';
+                break;
+            case 'oab':
+                pageType = 'https://www.estrategiaoab.com.br/gratis/sucesso/';
+                break;
+            case 'Unyleya':
+                pageType = 'https://www.estrategiaconcursos.com.br/gratis/pagina-sucesso-unyleya/';
+                break;
+            case 'vestibulares':
+                pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso-vestibulares/';
+                break;
+            default:
+                pageType = 'https://www.estrategiaconcursos.com.br/gratis/sucesso/';
+                break;
+            }
+        }
+        document.getElementById('sucess_page_form').value = pageType;
+    }
+
+    /* ===== Capta Cidade e Estado através do IP ===== */
     jQuery.getJSON('https://extreme-ip-lookup.com/json/', function(data) {
         jQuery('#Cidade_OrigemIP__c').val(data.city);
         jQuery('#Estado_OrigemIP__c').val(data.region);
@@ -110,7 +142,19 @@
         if (Referrer.includes('salesforce.com')) {
         ModoDeEntrada.setAttribute('value', 'salescloud');
         }
-    }    
+    }
+
+    /* ===== Título da Página (title) como Interesse Evento ===== */
+    const titleEl = document.getElementsByTagName('title')[0];
+    if (titleEl) {
+        const title = titleEl.innerHTML;
+        if (title.includes(' | Estratégia Concursos')) {
+            var resum = title.substring(0, title.indexOf(' | Estratégia Concursos'));
+            document.getElementById('Interesse_Evento__c').value = resum;
+        } else {
+            document.getElementById('Interesse_Evento__c').value = title;
+        }
+    }
 
     /* ===== Valida Email na Formatação Correta ===== */
     function validateEmail(email) {
@@ -182,7 +226,61 @@
                 }
             });
         }
-    }
+
+        // Enviado os dados pelo Formulário.
+        var formulario = document.getElementById("forms_layout");
+        var data = JSON.stringify({
+					oid: formulario.oid.value,
+					retURL: formulario.sucess_page_form.value,
+					Cidade_OrigemIP__c: formulario.Cidade_OrigemIP__c.value,
+					Estado_OrigemIP__c: formulario.Estado_OrigemIP__c.value,
+					Modo_de_entrada__c: formulario.Modo_de_entrada__c.value,
+					lead_source: formulario.lead_source.value,
+					Area_de_Interesse__c: formulario.Area_de_Interesse__c.value,
+					Concurso_de_Interesse__c: formulario.Concurso_de_Interesse__c.value,
+					Interesse_Evento__c: formulario.Interesse_Evento__c.value,
+					recordType: formulario.recordType.value,
+					Area_de_Interesse__c: formulario.Area_de_Interesse__c.value,
+					first_name: formulario.first_name.value,
+					email: formulario.email.value,
+					phone: formulario.phone.value
+		});
+
+        jQuery.ajax({
+            url: 'https://6kiijqg27h.execute-api.us-east-1.amazonaws.com/dev/add',
+            method: 'post',
+            async: true,
+            crossDomain: true,
+            data: {data},
+            timeout: 2000,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            error: function (error, textStatus, errorThrown) { console.error(error, textStatus, errorThrown); }
+        });
+
+        jQuery("form").submit(function(e){
+            e.preventDefault();
+            window.location.replace(document.getElementById('sucess_page_form').value);
+        });
+    };
+
+    /* ===== Animação dos Placeholders ===== */
+    jQuery('.input_labels').on('blur', function() {
+        if(jQuery(this).val().trim() != '') {
+            jQuery(this).addClass('has_val');
+        } else {
+            jQuery(this).removeClass('has_val');
+        }
+    });
+        
+    jQuery('.labels').focusout(function() {
+        if(jQuery(this).val() === '') {
+            jQuery(this).removeClass('has_value');
+        } else { 
+            jQuery(this).addClass('has_value');
+        }
+    });
 
     /* ===== Valida Telefone + Máscara ===== */
     function mascara(o, f) {
