@@ -145,18 +145,6 @@
         }
     }
 
-    /* ===== Título da Página (title) como Interesse Evento ===== */
-    const titleEl = document.getElementsByTagName('title')[0];
-    if (titleEl) {
-        const title = titleEl.innerHTML;
-        if (title.includes(' | Estratégia Concursos')) {
-            var resum = title.substring(0, title.indexOf(' | Estratégia Concursos'));
-            document.getElementById('Interesse_Evento__c').value = resum;
-        } else {
-            document.getElementById('Interesse_Evento__c').value = title;
-        }
-    }
-
     /* ===== Valida Email na Formatação Correta ===== */
     function validateEmail(email) {
         var re = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
