@@ -194,28 +194,6 @@
             emailError.hide();
         }
 
-        if (name !== '' && email !== '' && validateEmail(email) && terms == true) {
-            jQuery.ajax({
-                type: 'GET',
-                url: 'https://bpi.briteverify.com/emails.json',
-                data: {
-                    address: email,
-                    apikey: 'ea609555-7f56-4811-aeb3-a81a322ca1ea'
-                },
-                dataType: 'jsonp',
-                success: function(retornoJson) {
-                    if (retornoJson.status == 'valid') {
-                        emailError.hide();
-                        return form.submit();
-                    } else {
-                        emailError.text('Email Inexistente.');
-                        emailError.show();
-                        return false;
-                    }
-                }
-            });
-        }
-
         // Enviado os dados pelo Formulário.
         var formulario = document.getElementById("forms_layout");
         var data = JSON.stringify({
@@ -234,7 +212,31 @@
 					email: formulario.email.value,
 					phone: formulario.phone.value
 		});
+        var address = JSON.stringify({
+			address: formulario.email.value
+		});
 
+        // Validação do email na API:
+        if (name !== '' && email !== '' && validateEmail(email) && terms == true) {
+            jQuery.ajax({
+                url: 'https://v1yk2qndh9.execute-api.us-east-1.amazonaws.com/dev',
+                type: 'GET',
+                data: {address: formulario.email.value},
+                headers: {"Content-Type": "application/json"},
+                success: function() {
+                    emailError.hide();
+                    return form.submit();
+                },
+                error: function (error, textStatus, errorThrown) { 
+                    console.error(error, textStatus, errorThrown); 
+                    emailError.text('Email Inexistente.');
+                    emailError.show();
+                    return false;
+                }
+            });
+        }
+
+        // POST para publicado das leads no formulário.
         jQuery.ajax({
             url: 'https://6kiijqg27h.execute-api.us-east-1.amazonaws.com/dev/add',
             method: 'post',
