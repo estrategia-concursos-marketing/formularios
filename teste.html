@@ -1,6 +1,6 @@
 <!--- Não usamos tag de HTML, HEAD e BODY pois ele buga o junto com o DIV do Wordpress. Procure evitar por enquanto, se possível. -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<!--- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>  -->
 
 <!--- Elementos para o Bootstrap -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -9,13 +9,12 @@
 <!--- Personalização -->
 <style>
     #forms {
-        background-color: black;
         font-family: Arial, Helvetica, sans-serif;
     }
 
     #forms_layout {
         margin: auto;
-        height: 1000px;
+        max-height: 700px;
         max-width: 430px;
         background: transparent;
         border-radius: 10px;
@@ -144,7 +143,7 @@
     }
     /* -----> FIM da Animação <----- */
 
-    /* -----> Elemento para o Dropdown <----- */
+    /* -----> Elemento para o Dropdown  <----- */
     .btn-light {
         background-color: transparent !important;
         border-color: none;
@@ -181,17 +180,19 @@
     .check-mark {
         color: #144b9b;
     }
+
+    @media only screen and (max-width: 600px) {
+        .dropdown-menu{
+            transform: translate3d(0px, 0px, 0px) !important;
+        }
+    }
+
     .btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light.dropdown-toggle {
         color: white;
     }
 
     .bootstrap-select.show-tick .dropdown-menu li a span.text {
         font-weight: 500;
-    }
-    .bootstrap-select.show-tick .dropdown-menu .selected span.check-mark {
-        position: absolute;
-        display: inline-block;
-        right: 400px; 
     }
 
     .bootstrap-select .dropdown-menu.inner {
@@ -203,7 +204,18 @@
         border-radius: 0;
         -webkit-box-shadow: none;
         box-shadow: none;
-        padding-left: 20px;
+    }
+
+    .bootstrap-select .dropdown-menu li a {
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    b, strong {
+        font-weight: bold;
     }
     /* -----> FIM Elemento para o Dropdown <----- */
 
@@ -378,104 +390,21 @@
             </div>
 
             <div class='labels'>                
-                <select class="selectpicker form-control" id="selectpicker" title="SELECIONE SEU INTERESSE" data-hide-disabled="true" multiple>
-                        <option>ITA</option>
-                        <option>IME</option>
-                        <option>USP</option>
-                        <option>UNESP</option>
-                        <option>UNICAMP</option>
-                        <option>FATEC</option>
-                        <option>UEMA</option>
-                        <option>UERJ</option>
-                        <option>UEA</option>
-                        <option>UFPR</option>
-                        <option>UNEB</option>
-                        <option>Outras</option>
+                <select class="selectpicker form-control" id="selectpicker" title="SEU INTERESSE" data-toggle="dropdown" data-hide-disabled="true" multiple>
+                    <option>ITA</option>
+                    <option>IME</option>
+                    <option>USP</option>
+                    <option>UNESP</option>
+                    <option>UNICAMP</option>
+                    <option>FATEC</option>
+                    <option>UEMA</option>
+                    <option>UERJ</option>
+                    <option>UEA</option>
+                    <option>UFPR</option>
+                    <option>UNEB</option>
+                    <option>Outras</option>
                 </select>
             </div>
-
-
-<!--- 
-            <div class='labels'>
-                <div style='height: 35px;'></div>
-                <span class='placeholder_input' data-placeholder='VESTIBULAR DE INTERESSE'></span>
-            </div>
-
-            <div class='areas_interest'>
-                <input id='ITA' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='ITA' style='vertical-align:top'/>
-                    <label>
-                        ITA
-                    </label>
-                <br>
-            
-                <input id='IME' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='IME' style='vertical-align:top'/>
-                    <label>
-                      IME
-                    </label>
-                <br>
-            
-                <input id='USP' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='USP' style='vertical-align:top'/>
-                    <label>
-                      USP
-                    </label>
-                <br>
-                
-                <input id='UNESP' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UNESP' style='vertical-align:top'/>
-                    <label>
-                      UNESP
-                    </label>
-                <br>
-            
-                <input id='UNICAMP' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UNICAMP' style='vertical-align:top'/>
-                    <label>
-                      UNICAMP
-                    </label>
-                <br>
-            
-                <input id='FATEC' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='FATEC' style='vertical-align:top'/>
-                    <label>
-                      FATEC
-                    </label>
-                <br>
-            
-                <input id='UEMA' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UEMA' style='vertical-align:top'/>
-                  <label>
-                      UEMA
-                  </label>
-                <br>
-            
-                <input id='UERJ' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UERJ' style='vertical-align:top'/>
-                    <label>
-                      UERJ
-                    </label>
-                <br>
-            
-                <input id='UEA' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UEA' style='vertical-align:top'/>
-                    <label>
-                      UEA
-                    </label>
-                <br>
-            
-                <input id='UFPR' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UFPR' style='vertical-align:top'/>
-                    <label>
-                        UFPR
-                    </label>
-                <br>
-            
-                <input id='UNEB' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='UNEB' style='vertical-align:top'/>
-                    <label>
-                        UNEB
-                    </label>
-                <br>
-            
-                <input id='Outras-Instituicoes' name='area-de-interesse' onclick='handleAreaClick(this)' type='checkbox' value='Outras-Instituicoes' style='vertical-align:top'/>
-                    <label>
-                        Outras Instituições
-                    </label>
-                <br>
-              <br>
-            </div>
---->
         </div>
 
         <div>
@@ -650,7 +579,7 @@
 					Modo_de_entrada__c: formulario.Modo_de_entrada__c.value,
 					lead_source: formulario.lead_source.value,
 					Area_de_Interesse__c: formulario.Area_de_Interesse__c.value,
-					Concurso_de_Interesse__c: formulario.Concurso_de_Interesse__c.value,
+					Concurso_de_Interesse__c: jQuery('.selectpicker').val().toString(),
 					Interesse_Evento__c: formulario.Interesse_Evento__c.value,
 					recordType: formulario.recordType.value,
 					Area_de_Interesse__c: formulario.Area_de_Interesse__c.value,
@@ -744,11 +673,6 @@
     }
 
     /* ===== Área de Interesse com Várias Opções ===== */
-    $(function () {
-        selected = $('.selectpicker').val()
-        console.log(selected);
-    });
-
     const i = document.getElementById('Concurso_de_Interesse__c');
     i.setAttribute('value', '-Outras-Instituicoes-');
 
@@ -772,7 +696,6 @@
 </script>
 
 <!--- JS do Bootstrap -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 

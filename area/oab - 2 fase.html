@@ -1,14 +1,18 @@
 <!--- Não usamos tag de HTML, HEAD e BODY pois ele buga o junto com o DIV do Wordpress. Procure evitar por enquanto, se possível. -->
 
+<!--- Elementos para o Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+<!--- Personalização -->
 <style>
     #forms {
-        background-color: transparent;
         font-family: Arial, Helvetica, sans-serif;
     }
 
     #forms_layout {
         margin: auto;
-        max-height: 500px;
+        max-height: 700px;
         max-width: 430px;
         background: transparent;
         border-radius: 10px;
@@ -137,6 +141,82 @@
     }
     /* -----> FIM da Animação <----- */
 
+    /* -----> Elemento para o Dropdown  <----- */
+    .btn-light {
+        background-color: transparent !important;
+        border-color: none;
+        text-transform: capitalize;
+        display: block;
+        width: 100%;
+        font-size: 1.6em;
+        font-weight: bolder;
+        letter-spacing: 0.02em;
+        text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
+        color: #fff;
+        line-height: 1.2;
+    }
+
+    .bootstrap-select>.dropdown-toggle.bs-placeholder, .bootstrap-select>.dropdown-toggle.bs-placeholder:active, .bootstrap-select>.dropdown-toggle.bs-placeholder:focus, .bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+        color: white;
+    }
+
+    .btn {
+        border: 0px;
+        border-radius: 0px;
+        padding: 0px;
+    }
+
+    .btn:hover {
+        color: white;
+        text-decoration: none;
+    }
+
+    .form-control {
+        background-color: transparent !important;
+    }
+    
+    .check-mark {
+        color: #144b9b;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .dropdown-menu{
+            transform: translate3d(0px, 0px, 0px) !important;
+        }
+    }
+
+    .btn-light:not(:disabled):not(.disabled).active, .btn-light:not(:disabled):not(.disabled):active, .show>.btn-light.dropdown-toggle {
+        color: white;
+    }
+
+    .bootstrap-select.show-tick .dropdown-menu li a span.text {
+        font-weight: 500;
+    }
+
+    .bootstrap-select .dropdown-menu.inner {
+        position: static;
+        float: none;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .bootstrap-select .dropdown-menu li a {
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    b, strong {
+        font-weight: bold;
+    }
+    /* -----> FIM Elemento para o Dropdown <----- */
+
     .message_error {
         display: none; 
         position: relative; 
@@ -146,6 +226,15 @@
         letter-spacing: 0.02em;
         font-size: 1.2em;
         text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
+    }
+
+    label {
+        color: #fff;
+        line-height: 1.6;
+        font-size: 1em;
+        font-weight: bolder;
+        text-shadow: 0em 0.1em 0.1em rgba(0,0,0,0.9);
+        font-family: Arial, Helvetica, sans-serif; 
     }
     
     .container_checkbox {
@@ -297,10 +386,10 @@
                 <input class='input_labels' id='phone' maxlength='15' name='phone' size='20'>
                 <span class='placeholder_input' data-placeholder='TELEFONE'></span>         
             </div>
-            
-            <div class='labels'>
-                <select id='area_2oab' class='input_labels' required>
-                    <option selected disabled>ÁREA ESCOLHIDA:</option>
+
+            <div class='labels'>                
+                <select class="selectpicker form-control" id="selectpicker" title="SEU INTERESSE" data-toggle="dropdown" data-hide-disabled="true">
+                    <option selected disabled>SEU INTERESSE:</option>
                     <option value=' - Direito Administrativo'>Direito Administrativo</option>
                     <option value=' - Direito Civil'>Direito Civil</option>
                     <option value=' - Direito Constitucional'>Direito Constitucional</option>
@@ -319,9 +408,9 @@
         </div>
         
         <label class='container_checkbox'>
-                Você concorda com a nossa <a class='politics_privacy_ahref' href='https://www.estrategiaconcursos.com.br/gratis/politica-de-privacidade/' target='_blank' rel='noopener noreferrer'>Política de Privacidade</a> e aceita receber informações adicionais do Estratégia Educacional.
-                <input id='checkbox_layout' type='checkbox' checked='checked' required>
-                <span class='checkbox'></span>
+            Você concorda com a nossa <a class='politics_privacy_ahref' href='https://www.estrategiaconcursos.com.br/gratis/politica-de-privacidade/' target='_blank' rel='noopener noreferrer'>Política de Privacidade</a> e aceita receber informações adicionais do Estratégia Educacional.
+            <input id='checkbox_layout' type='checkbox' checked='checked' required>
+            <span class='checkbox'></span>
         </label>
 
     </form>
@@ -474,31 +563,10 @@
             emailError.hide();
         }
 
-        if (name !== '' && email !== '' && validateEmail(email) && terms == true) {
-            jQuery.ajax({
-                type: 'GET',
-                url: 'https://bpi.briteverify.com/emails.json',
-                data: {
-                    address: email,
-                    apikey: 'ea609555-7f56-4811-aeb3-a81a322ca1ea'
-                },
-                dataType: 'jsonp',
-                success: function(retornoJson) {
-                    if (retornoJson.status == 'valid') {
-                        emailError.hide();
-                        return form.submit();
-                    } else {
-                        emailError.text('Email Inexistente.');
-                        emailError.show();
-                        return false;
-                    }
-                }
-            });
-        }
-
-       /* ===== Seleção por Área para 2ª Fase da OAB ===== */
+        /* ===== Seleção por Área para 2ª Fase da OAB ===== */
+        const area = document.getElementById('Area_de_Interesse__c').value;
         if (area == 'oab') {
-            let area_2oab = document.getElementById('area_2oab').value;
+            let area_2oab = jQuery('.selectpicker').val().toString();
             document.getElementById('Interesse_Evento__c').value = titleEl.innerHTML + area_2oab;
         }
 
@@ -512,7 +580,7 @@
 					Modo_de_entrada__c: formulario.Modo_de_entrada__c.value,
 					lead_source: formulario.lead_source.value,
 					Area_de_Interesse__c: formulario.Area_de_Interesse__c.value,
-					Concurso_de_Interesse__c: formulario.Concurso_de_Interesse__c.value,
+					Concurso_de_Interesse__c: formulario.Concurso_de_Interesse__c.value, // Pega as várias áreas ou concursos de interesse no dropdown.
 					Interesse_Evento__c: formulario.Interesse_Evento__c.value,
 					recordType: formulario.recordType.value,
 					Area_de_Interesse__c: formulario.Area_de_Interesse__c.value,
@@ -520,7 +588,31 @@
 					email: formulario.email.value,
 					phone: formulario.phone.value
 		});
+        var address = JSON.stringify({
+			address: formulario.email.value
+		});
 
+        // Validação do email na API:
+        if (name !== '' && email !== '' && validateEmail(email) && terms == true) {
+            jQuery.ajax({
+                url: 'https://v1yk2qndh9.execute-api.us-east-1.amazonaws.com/dev',
+                type: 'GET',
+                data: {address: formulario.email.value},
+                headers: {"Content-Type": "application/json"},
+                success: function() {
+                    emailError.hide();
+                    return form.submit();
+                },
+                error: function (error, textStatus, errorThrown) { 
+                    console.error(error, textStatus, errorThrown); 
+                    emailError.text('Email Inexistente.');
+                    emailError.show();
+                    return false;
+                }
+            });
+        }
+
+        // POST para publicado das leads no formulário.
         jQuery.ajax({
             url: 'https://6kiijqg27h.execute-api.us-east-1.amazonaws.com/dev/add',
             method: 'post',
@@ -581,3 +673,10 @@
         }
     }
 </script>
+
+<!--- JS do Bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
